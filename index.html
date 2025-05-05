@@ -2,44 +2,28 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Course Code Generator</title>
+  <title>DTECH Course Generator</title>
   <style>
-    * {
+    @page {
+      size: A4;
       margin: 0;
-      padding: 0;
-      box-sizing: border-box;
     }
 
     html, body {
-      height: 100%;
+      margin: 0;
+      padding: 0;
       font-family: Arial, sans-serif;
       background: #f9fafb;
-      display: flex;
-      flex-direction: column;
+      color: #111827;
     }
 
-    header {
-      background-color: #1d4ed8;
-      color: white;
-      padding: 20px;
-      text-align: center;
-    }
-
-    main {
-      flex: 1;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      padding: 40px 20px;
-    }
-
-    .container {
-      width: 100%;
-      max-width: 800px;
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      padding: 20mm;
       background: white;
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+      box-sizing: border-box;
     }
 
     h1 {
@@ -60,17 +44,17 @@
       margin: 5px 0 15px;
       border: 1px solid #ccc;
       border-radius: 5px;
+      font-size: 14px;
     }
 
     button {
       background: #2563eb;
       color: white;
-      padding: 12px;
+      padding: 10px 16px;
       border: none;
-      margin-top: 10px;
+      margin: 10px 5px 0 0;
       border-radius: 5px;
       cursor: pointer;
-      width: 100%;
       font-weight: bold;
     }
 
@@ -85,6 +69,7 @@
       font-family: monospace;
       padding: 10px;
       border: 1px solid #ccc;
+      border-radius: 5px;
     }
 
     .subject-row {
@@ -96,63 +81,46 @@
     .subject-row select {
       flex: 1;
     }
-
-    footer {
-      background-color: #1d4ed8;
-      color: white;
-      text-align: center;
-      padding: 15px;
-      font-size: 14px;
-    }
   </style>
 </head>
 <body>
-
-  <header>
+  <div class="page">
     <h1>DTECH Course Generator</h1>
-  </header>
 
-  <main>
-    <div class="container">
-      <label>Course Name:</label>
-      <input type="text" id="courseName" placeholder="e.g. BCom Accounting" />
+    <label>Course Name:</label>
+    <input type="text" id="courseName" placeholder="e.g. BCom Accounting" />
 
-      <label>Minimum APS:</label>
-      <input type="number" id="minAPS" placeholder="e.g. 28" />
+    <label>Minimum APS:</label>
+    <input type="number" id="minAPS" placeholder="e.g. 28" />
 
-      <label>Subjects & Required %:</label>
-      <div id="subjectList">
-        <div class="subject-row">
-          <select class="subjectName">
-            <option value="">Select Subject</option>
-            <option>Mathematics</option>
-            <option>Mathematics Literacy</option>
-            <option>Physical Science</option>
-            <option>Technical Mathematics</option>
-            <option>Technical Science</option>
-            <option>Life Sciences</option>
-            <option>Geography</option>
-            <option>English</option>
-          </select>
-          <select class="subjectMark">
-            <option value="">Required %</option>
-            ${[...Array(10)].map((_, i) => `<option>${(i + 1) * 10}</option>`).join('')}
-          </select>
-        </div>
+    <label>Subjects & Required %:</label>
+    <div id="subjectList">
+      <div class="subject-row">
+        <select class="subjectName">
+          <option value="">Select Subject</option>
+          <option>Mathematics</option>
+          <option>Mathematics Literacy</option>
+          <option>Physical Science</option>
+          <option>Technical Mathematics</option>
+          <option>Technical Science</option>
+          <option>Life Sciences</option>
+          <option>Geography</option>
+          <option>English</option>
+        </select>
+        <select class="subjectMark">
+          <option value="">Required %</option>
+          ${[...Array(10)].map((_, i) => `<option>${(i + 1) * 10}</option>`).join('')}
+        </select>
       </div>
-
-      <button onclick="addSubject()">+ Add Another Subject</button>
-      <button onclick="saveCourse()">Apply Course</button>
-      <button onclick="generateOutput()">Generate All</button>
-      <button onclick="copyToClipboard()">Copy All</button>
-
-      <textarea id="outputBox" readonly></textarea>
     </div>
-  </main>
 
-  <footer>
-    &copy; 2025 DTECH. All rights reserved.
-  </footer>
+    <button onclick="addSubject()">+ Add Subject</button>
+    <button onclick="saveCourse()">Apply Course</button>
+    <button onclick="generateOutput()">Generate All</button>
+    <button onclick="copyToClipboard()">Copy All</button>
+
+    <textarea id="outputBox" readonly></textarea>
+  </div>
 
   <script>
     const courses = [];

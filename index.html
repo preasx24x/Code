@@ -27,13 +27,15 @@
 
     main {
       flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
       padding: 40px 20px;
-      background: #f9fafb;
     }
 
     .container {
-      max-width: 1200px;
-      margin: auto;
+      width: 100%;
+      max-width: 800px;
       background: white;
       padding: 30px;
       border-radius: 12px;
@@ -49,7 +51,7 @@
     label {
       font-weight: bold;
       display: block;
-      margin-top: 10px;
+      margin-top: 15px;
     }
 
     input, select {
@@ -142,4 +144,109 @@
       <button onclick="addSubject()">+ Add Another Subject</button>
       <button onclick="saveCourse()">Apply Course</button>
       <button onclick="generateOutput()">Generate All</button>
-      <button onclick="copyToClipboard()">Copy All</button
+      <button onclick="copyToClipboard()">Copy All</button>
+
+      <textarea id="outputBox" readonly></textarea>
+    </div>
+  </main>
+
+  <footer>
+    &copy; 2025 DTECH. All rights reserved.
+  </footer>
+
+  <script>
+    const courses = [];
+
+    function addSubject() {
+      const subjectList = document.getElementById("subjectList");
+      const row = document.createElement("div");
+      row.classList.add("subject-row");
+      row.innerHTML = `
+        <select class="subjectName">
+          <option value="">Select Subject</option>
+          <option>Mathematics</option>
+          <option>Mathematics Literacy</option>
+          <option>Physical Science</option>
+          <option>Technical Mathematics</option>
+          <option>Technical Science</option>
+          <option>Life Sciences</option>
+          <option>Geography</option>
+          <option>English</option>
+        </select>
+        <select class="subjectMark">
+          <option value="">Required %</option>
+          ${[...Array(10)].map((_, i) => `<option>${(i + 1) * 10}</option>`).join('')}
+        </select>
+      `;
+      subjectList.appendChild(row);
+    }
+
+    function saveCourse() {
+      const name = document.getElementById("courseName").value.trim();
+      const aps = parseInt(document.getElementById("minAPS").value.trim());
+      const subjectNames = document.querySelectorAll(".subjectName");
+      const subjectMarks = document.querySelectorAll(".subjectMark");
+
+      if (!name || isNaN(aps)) {
+        alert("Please fill in course name and APS.");
+        return;
+      }
+
+      const requirements = {};
+      for (let i = 0; i < subjectNames.length; i++) {
+        const subject = subjectNames[i].value.trim();
+        const mark = parseInt(subjectMarks[i].value.trim());
+        if (subject && !isNaN(mark)) {
+          requirements[subject] = mark;
+        }
+      }
+
+      if (Object.keys(requirements).length === 0) {
+        alert("Please select at least one subject and percentage.");
+        return;
+      }
+
+      courses.push({
+        name: name,
+        requirements: requirements,
+        minAPS: aps
+      });
+
+      document.getElementById("courseName").value = "";
+      document.getElementById("minAPS").value = "";
+      document.getElementById("subjectList").innerHTML = `
+        <div class="subject-row">
+          <select class="subjectName">
+            <option value="">Select Subject</option>
+            <option>Mathematics</option>
+            <option>Mathematics Literacy</option>
+            <option>Physical Science</option>
+            <option>Technical Mathematics</option>
+            <option>Technical Science</option>
+            <option>Life Sciences</option>
+            <option>Geography</option>
+            <option>English</option>
+          </select>
+          <select class="subjectMark">
+            <option value="">Required %</option>
+            ${[...Array(10)].map((_, i) => `<option>${(i + 1) * 10}</option>`).join('')}
+          </select>
+        </div>
+      `;
+      alert("Course saved!");
+    }
+
+    function generateOutput() {
+      const outputBox = document.getElementById("outputBox");
+      outputBox.value = JSON.stringify(courses, null, 2);
+    }
+
+    function copyToClipboard() {
+      const outputBox = document.getElementById("outputBox");
+      outputBox.select();
+      document.execCommand("copy");
+      alert("Copied to clipboard!");
+    }
+  </script>
+</body>
+</html>

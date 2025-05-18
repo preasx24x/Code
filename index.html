@@ -1,223 +1,80 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>DTECH Course Generator</title>
-  <link rel="manifest" href="manifest.json" />
-  <meta name="theme-color" content="#2563eb" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DTECH Tools Hub</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="icon" type="image/png" href="/logo.png">
   <style>
-    @page {
-      size: A4;
+    body, html {
+      height: 100%;
       margin: 0;
-    }
-
-    html, body {
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
-      background: #f9fafb;
-      color: #111827;
-    }
-
-    .page {
-      width: 210mm;
-      min-height: 297mm;
-      padding: 20mm;
-      background: white;
-      box-shadow: 0 0 5px rgba(0,0,0,0.1);
-      box-sizing: border-box;
-    }
-
-    h1 {
-      text-align: center;
-      color: #1d4ed8;
-      margin-bottom: 20px;
-    }
-
-    label {
-      font-weight: bold;
-      display: block;
-      margin-top: 15px;
-    }
-
-    input, select {
-      width: 100%;
-      padding: 10px;
-      margin: 5px 0 15px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      font-size: 14px;
-    }
-
-    button {
-      background: #2563eb;
-      color: white;
-      padding: 10px 16px;
-      border: none;
-      margin: 10px 5px 0 0;
-      border-radius: 5px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    button:hover {
-      background: #1e40af;
-    }
-
-    textarea {
-      width: 100%;
-      height: 300px;
-      margin-top: 20px;
-      font-family: monospace;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
-
-    .subject-row {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 10px;
-    }
-
-    .subject-row select {
-      flex: 1;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
   </style>
 </head>
-<body>
-  <!-- Body content stays the same -->
-  <div class="page">
-    <h1>DTECH Course Generator</h1>
+<body class="bg-black text-white">
+  <div class="flex flex-col h-screen"><header class="bg-blue-600 p-4 flex items-center space-x-3 shadow-md relative">
+  <img src="/logo.png" alt="DTECH Logo" class="w-10 h-10">
+  <div>
+    <h1 class="text-xl font-bold">DTECH Tools</h1>
+    <span class="text-sm italic">Empowering the youth through digital innovation</span>
+  </div>
+</header>
 
-    <label>Course Name:</label>
-    <input type="text" id="courseName" placeholder="e.g. BCom Accounting" />
+<div class="p-4 bg-black">
+  <input type="text" id="searchInput" onkeyup="searchTools()" placeholder="Search scripts..." class="w-full px-4 py-2 rounded-lg bg-gray-800 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-600 mb-2" />
+</div>
 
-    <label>Minimum APS:</label>
-    <input type="number" id="minAPS" placeholder="e.g. 28" />
-
-    <label>Subjects & Required %:</label>
-    <div id="subjectList">
-      <div class="subject-row">
-        <select class="subjectName">
-          <option value="">Select Subject</option>
-          <option>Mathematics</option>
-          <option>Mathematics Literacy</option>
-          <option>Physical Science</option>
-          <option>Technical Mathematics</option>
-          <option>Technical Science</option>
-          <option>Life Sciences</option>
-          <option>Geography</option>
-          <option>English</option>
-        </select>
-        <select class="subjectMark">
-          <option value="">Required %</option>
-          ${[...Array(10)].map((_, i) => `<option>${(i + 1) * 10}</option>`).join('')}
-        </select>
+<main class="flex-1 overflow-y-auto p-4">
+  <div id="toolGrid" class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div class="bg-white text-black rounded-xl p-4 shadow-md">
+      <h3 class="text-lg font-semibold">Termux Auto-Updater</h3>
+      <p class="text-sm text-gray-700 mt-1">A script to keep your Termux up to date automatically.</p>
+      <code class="block bg-gray-200 p-2 rounded text-sm mt-2 overflow-x-auto">
+        git clone https://github.com/preasx24/termux-updater
+      </code>
+      <div class="flex flex-wrap gap-2 mt-2">
+        <button onclick="copyCommand('git clone https://github.com/preasx24/termux-updater')" class="text-sm px-2 py-1 bg-blue-600 text-white rounded-md">Copy</button>
+        <a href="https://www.youtube.com/@DTECH" target="_blank" class="text-sm px-2 py-1 bg-red-600 text-white rounded-md">YouTube</a>
       </div>
     </div>
 
-    <button onclick="addSubject()">+ Add Subject</button>
-    <button onclick="saveCourse()">Apply Course</button>
-    <button onclick="generateOutput()">Generate All</button>
-    <button onclick="copyToClipboard()">Copy All</button>
-
-    <textarea id="outputBox" readonly></textarea>
+    <div class="bg-white text-black rounded-xl p-4 shadow-md">
+      <h3 class="text-lg font-semibold">WiFi Password Cracker (Demo)</h3>
+      <p class="text-sm text-gray-700 mt-1">Educational script for learning about WiFi networks.</p>
+      <code class="block bg-gray-200 p-2 rounded text-sm mt-2 overflow-x-auto">
+        git clone https://github.com/example/wifi-cracker
+      </code>
+      <div class="flex flex-wrap gap-2 mt-2">
+        <button onclick="copyCommand('git clone https://github.com/example/wifi-cracker')" class="text-sm px-2 py-1 bg-blue-600 text-white rounded-md">Copy</button>
+        <a href="https://www.youtube.com/@DTECH" target="_blank" class="text-sm px-2 py-1 bg-red-600 text-white rounded-md">YouTube</a>
+      </div>
+    </div>
   </div>
+</main>
 
-  <script>
-    const courses = [];
+<footer class="bg-blue-700 text-center text-white py-2 text-sm">
+  DTECH | Preasx24
+</footer>
 
-    function addSubject() {
-      const subjectList = document.getElementById("subjectList");
-      const row = document.createElement("div");
-      row.classList.add("subject-row");
-      row.innerHTML = `
-        <select class="subjectName">
-          <option value="">Select Subject</option>
-          <option>Mathematics</option>
-          <option>Mathematics Literacy</option>
-          <option>Physical Science</option>
-          <option>Technical Mathematics</option>
-          <option>Technical Science</option>
-          <option>Life Sciences</option>
-          <option>Geography</option>
-          <option>English</option>
-        </select>
-        <select class="subjectMark">
-          <option value="">Required %</option>
-          ${[...Array(10)].map((_, i) => `<option>${(i + 1) * 10}</option>`).join('')}
-        </select>
-      `;
-      subjectList.appendChild(row);
-    }
-
-    function saveCourse() {
-      const name = document.getElementById("courseName").value.trim();
-      const aps = parseInt(document.getElementById("minAPS").value.trim());
-      const subjectNames = document.querySelectorAll(".subjectName");
-      const subjectMarks = document.querySelectorAll(".subjectMark");
-
-      if (!name || isNaN(aps)) {
-        alert("Please fill in course name and APS.");
-        return;
-      }
-
-      const requirements = {};
-      for (let i = 0; i < subjectNames.length; i++) {
-        const subject = subjectNames[i].value.trim();
-        const mark = parseInt(subjectMarks[i].value.trim());
-        if (subject && !isNaN(mark)) {
-          requirements[subject] = mark;
-        }
-      }
-
-      if (Object.keys(requirements).length === 0) {
-        alert("Please select at least one subject and percentage.");
-        return;
-      }
-
-      courses.push({
-        name: name,
-        requirements: requirements,
-        minAPS: aps
+  </div>  <script>
+    function copyCommand(cmd) {
+      navigator.clipboard.writeText(cmd).then(() => {
+        alert("Command copied to clipboard!");
+      }).catch(err => {
+        console.error("Failed to copy: ", err);
       });
-
-      document.getElementById("courseName").value = "";
-      document.getElementById("minAPS").value = "";
-      document.getElementById("subjectList").innerHTML = `
-        <div class="subject-row">
-          <select class="subjectName">
-            <option value="">Select Subject</option>
-            <option>Mathematics</option>
-            <option>Mathematics Literacy</option>
-            <option>Physical Science</option>
-            <option>Technical Mathematics</option>
-            <option>Technical Science</option>
-            <option>Life Sciences</option>
-            <option>Geography</option>
-            <option>English</option>
-          </select>
-          <select class="subjectMark">
-            <option value="">Required %</option>
-            ${[...Array(10)].map((_, i) => `<option>${(i + 1) * 10}</option>`).join('')}
-          </select>
-        </div>
-      `;
-      alert("Course saved!");
     }
 
-    function generateOutput() {
-      const outputBox = document.getElementById("outputBox");
-      outputBox.value = JSON.stringify(courses, null, 2);
-    }
+    function searchTools() {
+      const input = document.getElementById("searchInput").value.toLowerCase();
+      const cards = document.querySelectorAll("#toolGrid > div");
 
-    function copyToClipboard() {
-      const outputBox = document.getElementById("outputBox");
-      outputBox.select();
-      document.execCommand("copy");
-      alert("Copied to clipboard!");
+      cards.forEach(card => {
+        const text = card.textContent.toLowerCase();
+        card.style.display = text.includes(input) ? "block" : "none";
+      });
     }
-  </script>
-</body>
+  </script></body>
 </html>

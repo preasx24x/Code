@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Script Card Generator</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #f0f0f0;
+      padding: 20px;
+    }
+    .card {
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      max-width: 700px;
+      margin-bottom: 20px;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      margin-bottom: 15px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+    button {
+      padding: 8px 16px;
+      background: #3b82f6;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    pre {
+      background: #e5e7eb;
+      padding: 12px;
+      border-radius: 6px;
+      overflow-x: auto;
+    }
+    .copy-btn {
+      background: #10b981;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <h2>Generate Script Card</h2>
+    <label>Script Name</label>
+    <input id="name" placeholder="e.g. Termux Auto-Updater">
+    <label>Description</label>
+    <textarea id="desc" placeholder="e.g. A script to keep your Termux up to date automatically."></textarea>
+    <label>GitHub Repo URL</label>
+    <input id="github" placeholder="e.g. https://github.com/preasx24/termux-updater">
+    <label>YouTube Link</label>
+    <input id="yt" placeholder="e.g. https://www.youtube.com/@DTECH">
+    <button onclick="generateCard()">Generate</button>
+  </div>
+
+  <h3>Generated HTML:</h3>
+  <pre id="output"></pre>
+  <button class="copy-btn" onclick="copyGeneratedCode()">Copy Code</button>
+
+  <script>
+    function generateCard() {
+      const name = document.getElementById("name").value;
+      const desc = document.getElementById("desc").value;
+      const github = document.getElementById("github").value;
+      const yt = document.getElementById("yt").value;
+
+      const code = `
+<div class="bg-white text-black rounded-xl p-4 shadow-md">
+  <h3 class="text-lg font-semibold">${name}</h3>
+  <p class="text-sm text-gray-700 mt-1">${desc}</p>
+  <code class="block bg-gray-200 p-2 rounded text-sm mt-2 overflow-x-auto">
+    git clone ${github}
+  </code>
+  <div class="flex flex-wrap gap-2 mt-2">
+    <button onclick="copyCommand('git clone ${github}')" class="text-sm px-2 py-1 bg-blue-600 text-white rounded-md">Copy</button>
+    <a href="${yt}" target="_blank" class="text-sm px-2 py-1 bg-red-600 text-white rounded-md">YouTube</a>
+  </div>
+</div>`;
+
+      document.getElementById("output").textContent = code.trim();
+    }
+
+    function copyGeneratedCode() {
+      const code = document.getElementById("output").textContent;
+      navigator.clipboard.writeText(code).then(() => {
+        alert("Code copied to clipboard!");
+      });
+    }
+
+    function copyCommand(cmd) {
+      navigator.clipboard.writeText(cmd);
+      alert("Command copied!");
+    }
+  </script>
+
+</body>
+</html>

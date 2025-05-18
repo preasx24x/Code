@@ -14,7 +14,7 @@
   </style>
 </head>
 <body class="bg-black text-white">
-  <div class="flex flex-col h-screen"><header class="bg-blue-600 p-4 flex items-center space-x-3 shadow-md relative">
+  <div class="flex flex-col h-screen"><header class="bg-blue-600 p-4 flex items-center space-x-3 shadow-md">
   <img src="/logo.png" alt="DTECH Logo" class="w-10 h-10">
   <div>
     <h1 class="text-xl font-bold">DTECH Tools</h1>
@@ -28,7 +28,7 @@
 
 <main class="flex-1 overflow-y-auto p-4">
   <div id="toolGrid" class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-    <div class="bg-white text-black rounded-xl p-4 shadow-md">
+    <div class="bg-white text-black rounded-xl p-4 shadow-md" data-category="automation">
       <h3 class="text-lg font-semibold">Termux Auto-Updater</h3>
       <p class="text-sm text-gray-700 mt-1">A script to keep your Termux up to date automatically.</p>
       <code class="block bg-gray-200 p-2 rounded text-sm mt-2 overflow-x-auto">
@@ -37,10 +37,11 @@
       <div class="flex flex-wrap gap-2 mt-2">
         <button onclick="copyCommand('git clone https://github.com/preasx24/termux-updater')" class="text-sm px-2 py-1 bg-blue-600 text-white rounded-md">Copy</button>
         <a href="https://www.youtube.com/@DTECH" target="_blank" class="text-sm px-2 py-1 bg-red-600 text-white rounded-md">YouTube</a>
+        <a href="https://www.education.gov.za/LinkClick.aspx?fileticket=YDcbYdrtuIU%3d&tabid=3137&portalid=0&mid=10537" download class="text-sm px-2 py-1 bg-green-600 text-white rounded-md">Download</a>
       </div>
     </div>
 
-    <div class="bg-white text-black rounded-xl p-4 shadow-md">
+    <div class="bg-white text-black rounded-xl p-4 shadow-md" data-category="hacking">
       <h3 class="text-lg font-semibold">WiFi Password Cracker (Demo)</h3>
       <p class="text-sm text-gray-700 mt-1">Educational script for learning about WiFi networks.</p>
       <code class="block bg-gray-200 p-2 rounded text-sm mt-2 overflow-x-auto">
@@ -60,11 +61,8 @@
 
   </div>  <script>
     function copyCommand(cmd) {
-      navigator.clipboard.writeText(cmd).then(() => {
-        alert("Command copied to clipboard!");
-      }).catch(err => {
-        console.error("Failed to copy: ", err);
-      });
+      navigator.clipboard.writeText(cmd);
+      alert("Command copied to clipboard!");
     }
 
     function searchTools() {
